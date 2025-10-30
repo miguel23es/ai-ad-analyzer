@@ -552,8 +552,7 @@ app.post("/analyzeAd", async (req, res) => {
   let llmSummary = {
     aiSummary:
       "AI summary unavailable. (Model call failed or not configured.)",
-    rewrite:
-      "Rewrite unavailable. Add your OpenAI API key in .env to enable AI rewrites.",
+    rewrite: ""
   };
 
   try {
@@ -567,16 +566,30 @@ app.post("/analyzeAd", async (req, res) => {
     console.error("LLM error:", err);
   }
 
+  // NEW: if the LLM gave us a rewrite, rescore it with the SAME goal
+  let improvedScore = null;
+  if (llmSummary.rewrite && llmSummary.rewrite.trim().length > 0) {
+    if (goal === "clicks") {
+      improvedScore = scoreForClicks(llmSummary.rewrite).finalScore;
+    } else if (goal === "conversions") {
+      improvedScore = scoreForConversions(llmSummary.rewrite).finalScore;
+    } else if (goal === "awareness") {
+      improvedScore = scoreForAwareness(llmSummary.rewrite).finalScore;
+    }
+  }
+
   // final response to frontend
   return res.json({
     goalAnalyzed: goal,
-    score: result.finalScore,
+    score: result.finalScore,            // original ad score
+    improvedScore,                      // NEW: AI version score
     breakdown: result.breakdown,
     aiSummary: llmSummary.aiSummary,
     rewrite: llmSummary.rewrite,
     imageAdvice,
     suggestions,
   });
+
 });
 
 /*

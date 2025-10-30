@@ -63,8 +63,18 @@ function renderResults(data) {
   // unhide results card
   resultsCard.style.display = "block";
 
-  // score
+  // main score
   scoreValue.textContent = data.score ?? "--";
+
+  // 🟢 Add this block right after displaying main score:
+  if (data.improvedScore != null) {
+    const improved = document.createElement("p");
+    improved.textContent = `AI version score: ${data.improvedScore} / 100`;
+    improved.style.fontSize = "0.8rem";
+    improved.style.color = "#22c55e";
+    improved.style.marginTop = "4px";
+    scoreValue.parentNode.appendChild(improved);
+  }
 
   // goal
   goalDisplay.textContent = data.goalAnalyzed ?? "--";
@@ -106,6 +116,7 @@ function renderResults(data) {
     });
   }
 }
+
 
 function showError(msg) {
   errorMsg.textContent = msg;
