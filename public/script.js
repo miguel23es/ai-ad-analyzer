@@ -26,7 +26,7 @@ analyzeBtn.addEventListener("click", async () => {
 
   try {
     // send request to backend
-    const response = await fetch("http://localhost:3000/analyzeAd", {
+    const response = await fetch("/analyzeAd", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
