@@ -5,6 +5,11 @@ import express from "express";
 import cors from "cors";
 import OpenAI from "openai";
 
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const app = express();
 
 // Middleware so we can accept JSON from the client
@@ -14,6 +19,15 @@ app.use(express.json());
 // create OpenAI client using your API key from .env
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
+});
+
+
+// Serve static files (frontend)
+app.use(express.static(path.join(__dirname, "public")));
+
+// Serve index.html for the root route
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 /*
