@@ -1,33 +1,36 @@
+// 1) Load env vars
 import dotenv from "dotenv";
 dotenv.config();
 
+// 2) Imports (ESM-style)
 import express from "express";
 import cors from "cors";
 import OpenAI from "openai";
-
 import path from "path";
 import { fileURLToPath } from "url";
 
+// 3) __dirname replacement for ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// 4) App init
 const app = express();
 
-// Middleware so we can accept JSON from the client
+// 5) Middleware
 app.use(cors());
 app.use(express.json());
 
-// create OpenAI client using your API key from .env
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
-
-
-// Serve static files (frontend)
+// 6) Serve static frontend from /public
 app.use(express.static(path.join(__dirname, "public")));
 
-// Serve index.html for the root route
+// 7) Root -> index.html
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// 8) OpenAI client
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 /*
