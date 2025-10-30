@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ad Analyzer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app-shell">
+    <header class="header">
+      <h1>Ad Analyzer</h1>
+      <p class="subtitle">Is your ad good for what you're trying to do?</p>
+    </header>
+
+    <section class="card">
+      <h2 class="section-title">1. Your Ad</h2>
+
+      <label class="input-label" for="adText">Ad text</label>
+      <textarea id="adText" class="text-input" rows="6" placeholder="Example: Save 25% today on our award-winning plan. Trusted by 10,000+ happy customers. Start your free trial now."></textarea>
+
+      <label class="input-label" for="goalSelect">Goal</label>
+      <select id="goalSelect" class="select-input">
+        <option value="awareness">Brand Awareness / Identity</option>
+        <option value="clicks">Clicks / Traffic</option>
+        <option value="conversions">Conversions / Sales</option>
+      </select>
+
+      <button id="analyzeBtn" class="analyze-btn">Analyze Ad</button>
+
+      <p id="errorMsg" class="error-msg" style="display:none;"></p>
+    </section>
+
+    <section id="resultsCard" class="card" style="display:none;">
+      <h2 class="section-title">2. Results</h2>
+
+      <div class="score-row">
+        <div class="score-block">
+          <div class="score-label">Overall Score</div>
+          <div id="scoreValue" class="score-number">--</div>
+          <div class="score-scale">/ 100</div>
+        </div>
+
+        <div class="meta-block">
+          <div class="meta-row"><span class="meta-key">Goal:</span> <span id="goalDisplay" class="meta-val">--</span></div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="subsection-title">AI Summary</h3>
+        <p id="aiSummaryText" class="summary-text">--</p>
+      </div>
+
+      <div class="subsection">
+        <h3 class="subsection-title">Suggested Rewrite</h3>
+        <p id="rewriteText" class="summary-text">--</p>
+     </div>
+
+      <div class="subsection">
+        <h3 class="subsection-title">Breakdown</h3>
+        <div id="breakdownList" class="breakdown-grid">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="subsection-title">Suggestions to Improve</h3>
+        <ul id="suggestionsList" class="suggestions-list">
+          <!-- Filled by JS -->
+        </ul>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Ad Analyzer MVP • CS Senior Project</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
